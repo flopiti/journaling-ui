@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   nextjs:
-    container_name: next-13-docker-pages-auth0
+    container_name: journaling-ui-app-nextjs
     build: .
     ports:
       - 3001:3001
@@ -11,7 +11,7 @@ services:
     entrypoint: /bin/sh -c "npm install && npm run dev"
 
   nextjs-prod:
-    container_name: next-13-docker-pages-auth0-prod
+    container_name: journaling-ui-app-nextjs-prod
     build: .
     ports:
       - 3001:3001
@@ -20,7 +20,7 @@ services:
     entrypoint: /bin/sh -c "npm install && npm run build && npm run start"
 
   mock-api:
-    container_name: next-13-docker-pages-auth0-prod-mock
+    container_name: journaling-ui-app-mock-api
     build: .
     volumes:
       - ./:/app
