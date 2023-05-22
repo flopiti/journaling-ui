@@ -12,7 +12,7 @@ services:
       BACKEND_URL: http://springboot:8080
     entrypoint: /bin/sh -c "npm install && npm run build && npm run start"
     networks:
-    - journaling-app
+    - journaling-back-end_journaling-app 
 
 networks:
   journaling-app:
