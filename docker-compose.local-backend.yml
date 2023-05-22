@@ -5,15 +5,15 @@ services:
     container_name: journaling-ui-app-with-local-backend
     build: .
     ports:
-      - 3006:3006
+      - 3001:3001
     volumes:
       - .:/app
     environment:
       BACKEND_URL: http://springboot:8080
     entrypoint: /bin/sh -c "npm install && npm run dev"
     networks:
-    - journaling-app
+    - journaling-back-end_journaling-app
 
 networks:
-  journaling-app:
+  journaling-back-end_journaling-app :
     external: true
