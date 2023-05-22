@@ -15,7 +15,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+      <h4>
+        This is the journaling app
+      </h4>
       <a href="/api/auth/login">Login</a>
+
       </main>
     </>
   )
