@@ -15,5 +15,5 @@ services:
     - journaling-back-end_journaling-app 
 
 networks:
-  journaling-app:
+  journaling-back-end_journaling-app :
     external: true
