@@ -5,7 +5,7 @@ services:
     container_name: journaling-ui-app
     build: .
     ports:
-      - 3006:3006
+      - 3010:3006
     volumes:
       - .:/app
     environment:
