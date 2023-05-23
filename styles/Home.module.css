@@ -6,6 +6,14 @@
   padding: 6rem;
   min-height: 100vh;
   background-color: #371722;
+  font-family: 'VT323', sans-serif;
+}
+
+@font-face {
+  font-family: 'VT323';
+  src: url('/VT323-Regular.ttf') format('truetype');  /* Update the path and format as necessary */
+  font-weight: normal;
+  font-style: normal;
 }
 
 .description {
