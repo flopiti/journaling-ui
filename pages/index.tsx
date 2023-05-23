@@ -16,7 +16,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
       <h4>
-        This is the journaling app
+        This is the journaling app 2
       </h4>
       <a href="/api/auth/login">Login</a>
 
