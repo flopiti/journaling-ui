@@ -9,6 +9,10 @@
   font-family: 'VT323', sans-serif;
 }
 
+.note{
+  width: 100%;
+}
+
 @font-face {
   font-family: 'VT323';
   src: url('/VT323-Regular.ttf') format('truetype');  /* Update the path and format as necessary */
