@@ -3,10 +3,43 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
+import { useNotes } from '@/hooks/useNotes'
+import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export interface Note {
+  id: string;
+  text: string;
+  datetime: string;
+}
+
 export default withPageAuthRequired(function Home() {
+
+  const {createNote, getNotes } = useNotes();
+
+  const[notes, setNotes] = useState<Note[]>([])
+  
+
+  useEffect(() => {
+    getNotes().then((notes) => {
+      setNotes(notes)
+      console.log(notes)
+    })
+  }, [])
+
+  const [text, setText] = useState('');
+
+  const handleSubmit = (event:any) => {
+    event.preventDefault();
+    createNote({
+      text: text,
+    }).then((note) => {
+      setNotes([...notes, note]);
+    });
+    setText('');
+  };
+
   return (
     <>
       <Head>
@@ -16,11 +49,28 @@ export default withPageAuthRequired(function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-      <h4>
-        This is the journaling app 2
-      </h4>
-      <a href="/api/auth/login">Login</a>
 
+      {
+        notes.map((note) => {
+          console.log(note.datetime);
+          const dateNew: Date = new Date(note.datetime)
+          let formattedDate = `${dateNew.getFullYear()}-${String(dateNew.getMonth() + 1).padStart(2, '0')}-${String(dateNew.getDate()).padStart(2, '0')} ${String(dateNew.getHours()).padStart(2, '0')}:${String(dateNew.getMinutes()).padStart(2, '0')}:${String(dateNew.getSeconds()).padStart(2, '0')}`;
+
+          return <div key={note.id} className={styles.note}>
+            <span>
+               {formattedDate}  -    
+            </span>
+            <span>   {note.text}</span>
+          </div>  
+        })
+      }
+      <form onSubmit={handleSubmit}>
+      <input 
+        type="text" 
+        value={text} 
+        onChange={e => setText(e.target.value)} 
+      />
+    </form>
       </main>
     </>
   )

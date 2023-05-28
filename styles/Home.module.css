@@ -1,12 +1,16 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
   background-color: #371722;
   font-family: 'VT323', sans-serif;
+}
+
+.note{
+  width: 100%;
 }
 
 @font-face {
