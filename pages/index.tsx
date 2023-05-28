@@ -28,6 +28,19 @@ export default withPageAuthRequired(function Home() {
     })
   }, [])
 
+  const [text, setText] = useState('');
+
+  const handleSubmit = (event:any) => {
+    event.preventDefault();
+    createNote({
+      text: text,
+      datetime: new Date().toISOString(),
+    }).then((note) => {
+      setNotes([...notes, note]);
+    });
+    setText('');
+  };
+
   return (
     <>
       <Head>
@@ -45,6 +58,13 @@ export default withPageAuthRequired(function Home() {
           </div>  
         })
       }
+      <form onSubmit={handleSubmit}>
+      <input 
+        type="text" 
+        value={text} 
+        onChange={e => setText(e.target.value)} 
+      />
+    </form>
       </main>
     </>
   )
