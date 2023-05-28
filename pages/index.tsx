@@ -3,10 +3,31 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
+import { useNotes } from '@/hooks/useNotes'
+import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export interface Note {
+  id: string;
+  text: string;
+  date: Date;
+}
+
 export default withPageAuthRequired(function Home() {
+
+  const {createNote, getNotes } = useNotes();
+
+  const[notes, setNotes] = useState<Note[]>([])
+  
+
+  useEffect(() => {
+    getNotes().then((notes) => {
+      setNotes(notes)
+      console.log(notes)
+    })
+  }, [])
+
   return (
     <>
       <Head>
@@ -16,11 +37,18 @@ export default withPageAuthRequired(function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+
+        
       <h4>
         This is the journaling app 2
       </h4>
-      <a href="/api/auth/login">Login</a>
-
+      {
+        notes.map((note) => {
+          return <div key={note.id}>
+            <p>{note.text}</p>
+          </div>  
+        })
+      }
       </main>
     </>
   )
