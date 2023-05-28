@@ -38,10 +38,6 @@ export default withPageAuthRequired(function Home() {
       </Head>
       <main className={styles.main}>
 
-        
-      <h4>
-        This is the journaling app 2
-      </h4>
       {
         notes.map((note) => {
           return <div key={note.id}>
