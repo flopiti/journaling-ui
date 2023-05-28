@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 export interface Note {
   id: string;
   text: string;
-  date: Date;
+  datetime: string;
 }
 
 export default withPageAuthRequired(function Home() {
@@ -34,7 +34,6 @@ export default withPageAuthRequired(function Home() {
     event.preventDefault();
     createNote({
       text: text,
-      datetime: new Date().toISOString(),
     }).then((note) => {
       setNotes([...notes, note]);
     });
@@ -53,8 +52,15 @@ export default withPageAuthRequired(function Home() {
 
       {
         notes.map((note) => {
-          return <div key={note.id}>
-            <p>{note.text}</p>
+          console.log(note.datetime);
+          const dateNew: Date = new Date(note.datetime)
+          let formattedDate = `${dateNew.getFullYear()}-${String(dateNew.getMonth() + 1).padStart(2, '0')}-${String(dateNew.getDate()).padStart(2, '0')} ${String(dateNew.getHours()).padStart(2, '0')}:${String(dateNew.getMinutes()).padStart(2, '0')}:${String(dateNew.getSeconds()).padStart(2, '0')}`;
+
+          return <div key={note.id} className={styles.note}>
+            <span>
+               {formattedDate}  -    
+            </span>
+            <span>   {note.text}</span>
           </div>  
         })
       }
