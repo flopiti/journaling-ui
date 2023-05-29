@@ -44,8 +44,13 @@
 input[type="text"] {
   font-family: inherit;
   font-size: inherit;
+  
 }
 
+input:focus {
+  outline: none;
+  background-color: transparent;
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
