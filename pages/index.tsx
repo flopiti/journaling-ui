@@ -60,7 +60,7 @@ export default withPageAuthRequired(function Home() {
             <span className={styles.date}>
               {formattedDate}    
             </span>
-            <span>&nbsp; {note.text}</span>
+            <span className={styles.text}>{note.text}</span>
           </div>  
         })
       }
