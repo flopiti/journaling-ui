@@ -40,6 +40,18 @@ export default withPageAuthRequired(function Home() {
     setText('');
   };
 
+  const handleKeyDown = (event:any)=>{
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  }
+
+  const autoGrow = (event:any) => {
+    event.target.style.height = "auto";
+    event.target.style.height = (event.target.scrollHeight)+"px";
+
+  }
   return (
     <>
       <Head>
@@ -64,11 +76,8 @@ export default withPageAuthRequired(function Home() {
           </div>  
         })
       }
-      <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        value={text} 
-        onChange={e => setText(e.target.value)} 
+      <form onSubmit={handleSubmit} className={styles.form}>
+      <textarea onInput={autoGrow} className={styles.input} value={text} onChange={e => setText(e.target.value)} onKeyDown={handleKeyDown}
       />
     </form>
       </main>
