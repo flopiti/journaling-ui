@@ -57,10 +57,10 @@ export default withPageAuthRequired(function Home() {
           let formattedDate = `${dateNew.getFullYear()}-${String(dateNew.getMonth() + 1).padStart(2, '0')}-${String(dateNew.getDate()).padStart(2, '0')} ${String(dateNew.getHours()).padStart(2, '0')}:${String(dateNew.getMinutes()).padStart(2, '0')}:${String(dateNew.getSeconds()).padStart(2, '0')}`;
 
           return <div key={note.id} className={styles.note}>
-            <span>
-               {formattedDate}  -    
+            <span className={styles.date}>
+              {formattedDate}    
             </span>
-            <span>   {note.text}</span>
+            <span>&nbsp; {note.text}</span>
           </div>  
         })
       }
