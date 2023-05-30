@@ -38,7 +38,7 @@ const DesktopApp = () => {
       event.target.style.height = (event.target.scrollHeight)+"px";
   
     }
-    function convertUTCDateToLocalDate(date) {
+    function convertUTCDateToLocalDate(date:Date) {
       var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
   
       var offset = date.getTimezoneOffset() / 60;
