@@ -6,6 +6,7 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useNotes } from '@/hooks/useNotes'
 import { useEffect, useState } from 'react'
 import DesktopApp from '@/components/DesktopApp'
+import MobileApp from '@/components/MobileApp'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,9 +37,7 @@ export default withPageAuthRequired(function Home() {
       <main className={styles.main}>
         {
           isMobile ?
-            <div className={styles.mobileApp}>
-              <h1>Mobile App</h1>
-            </div>
+            <MobileApp />
             :
             <DesktopApp />
         }
