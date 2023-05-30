@@ -3,10 +3,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 6rem;
   min-height: 100vh;
   background-color: #371722;
   font-family: 'VT323', sans-serif;
+}
+
+.desktopApp{
+  padding:6rem;
 }
 
 .note {
