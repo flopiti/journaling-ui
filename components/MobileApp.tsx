@@ -39,13 +39,24 @@ const MobileApp = () => {
       event.target.style.height = (event.target.scrollHeight)+"px";
   
     }
+    function convertUTCDateToLocalDate(date:Date) {
+      var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+  
+      var offset = date.getTimezoneOffset() / 60;
+      var hours = date.getHours();
+  
+      newDate.setHours(hours - offset);
+  
+      return newDate;   
+  }
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
 
     return (
         <div className={styles.mobileApp}>
         {
                 notes.map((note) => {
-                const dateNew: Date = new Date(note.datetime)
-                let formattedDate = `${dateNew.getFullYear()}-${String(dateNew.getMonth() + 1).padStart(2, '0')}-${String(dateNew.getDate()).padStart(2, '0')} ${String(dateNew.getHours()).padStart(2, '0')}:${String(dateNew.getMinutes()).padStart(2, '0')}:${String(dateNew.getSeconds()).padStart(2, '0')}`;
+                  const dateNew: Date = convertUTCDateToLocalDate(new Date(note.datetime));
+                  let formattedDate = `${dateNew.getFullYear()}-${String(dateNew.getMonth() + 1).padStart(2, '0')}-${String(dateNew.getDate()).padStart(2, '0')} ${String(dateNew.getHours()).padStart(2, '0')}:${String(dateNew.getMinutes()).padStart(2, '0')}:${String(dateNew.getSeconds()).padStart(2, '0')}`;
 
                 return <div key={note.id} className={styles.note}>
                     <div className={styles.date}>
