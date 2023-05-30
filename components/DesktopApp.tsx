@@ -4,10 +4,8 @@ import { useState, useEffect } from "react";
 import styles from '@/styles/Home.module.css'
 
 const DesktopApp = () => {
-
     const[notes, setNotes] = useState<Note[]>([])
     const {createNote, getNotes } = useNotes();
-
 
     useEffect(() => {
       getNotes().then((notes) => {
@@ -42,7 +40,7 @@ const DesktopApp = () => {
     }
 
     return (
-        <div className="desktop-app">
+        <div className={styles.desktopApp}>
         {
                 notes.map((note) => {
                 console.log(note.datetime);
@@ -61,7 +59,6 @@ const DesktopApp = () => {
             <textarea onInput={autoGrow} className={styles.input} value={text} onChange={e => setText(e.target.value)} onKeyDown={handleKeyDown}
             />
             </form>
-
         </div>
     );
     };
