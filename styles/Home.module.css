@@ -9,8 +9,32 @@
   font-family: 'VT323', sans-serif;
 }
 
-.note{
+.note {
+  display: flex;
   width: 100%;
+}
+
+.form{
+  margin-top: 25px;
+  width:100%;
+}
+
+.date {
+  flex-shrink: 0;
+  color: #BBAB9B;
+  margin-right: 15px;
+}
+.input:focus{
+  outline: none;
+  background-color: transparent;
+}
+.input{
+  width: 100%;
+  min-height: 30px;
+  border:#BBAB9B 1px solid;
+  background-color: transparent;
+  padding: 10px;
+
 }
 
 @font-face {
