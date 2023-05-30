@@ -5,6 +5,7 @@ import styles from '@/styles/Home.module.css'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { useNotes } from '@/hooks/useNotes'
 import { useEffect, useState } from 'react'
+import DesktopApp from '@/components/DesktopApp'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,42 +17,14 @@ export interface Note {
 
 export default withPageAuthRequired(function Home() {
 
-  const {createNote, getNotes } = useNotes();
-
-  const[notes, setNotes] = useState<Note[]>([])
-  
-
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    getNotes().then((notes) => {
-      setNotes(notes)
-      console.log(notes)
-    })
-  }, [])
-
-  const [text, setText] = useState('');
-
-  const handleSubmit = (event:any) => {
-    event.preventDefault();
-    createNote({
-      text: text,
-    }).then((note) => {
-      setNotes([...notes, note]);
-    });
-    setText('');
-  };
-
-  const handleKeyDown = (event:any)=>{
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      handleSubmit(event);
+    if (window.innerWidth < 768) {
+      setIsMobile(true);
     }
-  }
+  }, []);
 
-  const autoGrow = (event:any) => {
-    event.target.style.height = "auto";
-    event.target.style.height = (event.target.scrollHeight)+"px";
 
-  }
   return (
     <>
       <Head>
@@ -61,25 +34,14 @@ export default withPageAuthRequired(function Home() {
         <link rel="icon" href="/journaling_icon.ico" />
       </Head>
       <main className={styles.main}>
-
-      {
-        notes.map((note) => {
-          console.log(note.datetime);
-          const dateNew: Date = new Date(note.datetime)
-          let formattedDate = `${dateNew.getFullYear()}-${String(dateNew.getMonth() + 1).padStart(2, '0')}-${String(dateNew.getDate()).padStart(2, '0')} ${String(dateNew.getHours()).padStart(2, '0')}:${String(dateNew.getMinutes()).padStart(2, '0')}:${String(dateNew.getSeconds()).padStart(2, '0')}`;
-
-          return <div key={note.id} className={styles.note}>
-            <span className={styles.date}>
-              {formattedDate}    
-            </span>
-            <span className={styles.text}>{note.text}</span>
-          </div>  
-        })
-      }
-      <form onSubmit={handleSubmit} className={styles.form}>
-      <textarea onInput={autoGrow} className={styles.input} value={text} onChange={e => setText(e.target.value)} onKeyDown={handleKeyDown}
-      />
-    </form>
+        {
+          isMobile ?
+            <div className={styles.mobileApp}>
+              <h1>Mobile App</h1>
+            </div>
+            :
+            <DesktopApp />
+        }
       </main>
     </>
   )
