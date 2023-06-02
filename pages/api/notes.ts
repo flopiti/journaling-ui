@@ -15,6 +15,19 @@ const handleGetMethod = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(response?.data);
 }
 
+const handleDeleteMethod = async (req: NextApiRequest, res: NextApiResponse) => {
+    const {accessToken} = await getAccessToken(req, res)
+    const response = await axios.delete(`${process.env.BACKEND_URL}/api/notes`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    return res.status(200).json(response?.data);
+}
+
 const handlePostMethod = async (req: NextApiRequest, res: NextApiResponse) => { 
     const {accessToken} = await getAccessToken(req, res)
     const response = await axios.post(`${process.env.BACKEND_URL}/api/notes`, req.body, {
@@ -34,6 +47,8 @@ const handler = (req: NextApiRequest, res: NextApiResponse<any[]>) => {
             return handleGetMethod(req, res);
         case 'POST':
             return handlePostMethod(req, res);
+        case 'DELETE':
+            return handleDeleteMethod(req, res);
         default:
             return res.status(405).end()
     }
