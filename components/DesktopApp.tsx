@@ -5,7 +5,7 @@ import styles from '@/styles/Home.module.css'
 
 const DesktopApp = () => {
     const[notes, setNotes] = useState<Note[]>([])
-    const {createNote, getNotes } = useNotes();
+    const {createNote, getNotes, deleteNote } = useNotes();
 
     useEffect(() => {
       getNotes().then((notes) => {
