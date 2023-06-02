@@ -20,6 +20,21 @@ export const useNotes = () => {
         }
         };
 
+        const deleteNote = async (id:any) => {
+            const response = await makeRequest({
+                config: {
+                    method: "DELETE",
+                    url: `/api/notes/${id}`,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                    },
+                },
+            });
+            return response;
+        }
+
         const getNotes = async () => {
             const response = await makeRequest({
                 config: {
@@ -50,6 +65,6 @@ export const useNotes = () => {
             });
             return response;
         }
-        return { getNotes, createNote };
+        return { getNotes, createNote , deleteNote};
     }
     
