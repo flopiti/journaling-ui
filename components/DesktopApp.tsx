@@ -1,6 +1,6 @@
 import { useNotes } from "@/hooks/useNotes";
 import { Note } from "@/pages";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from '@/styles/Home.module.css'
 
 const DesktopApp = () => {
@@ -8,35 +8,47 @@ const DesktopApp = () => {
     const {createNote, getNotes, deleteNote } = useNotes();
     const [selectedNote, setSelectedNote] = useState<number | null>(null);
 
+    const handleArrowAndDeleteKeys = useCallback((event: KeyboardEvent) => {
+      if (event.key === 'Delete' || event.key === 'Backspace') {
+        if (selectedNote !== null) {
+          console.log(selectedNote)
+          console.log(notes[selectedNote].id);
+
+          deleteNote(notes[selectedNote].id).then(() => {
+            setSelectedNote(null);
+            getNotes().then(setNotes);
+          });
+        }
+      }
+      if (event.key === 'ArrowUp') {
+        setSelectedNote(prevSelectedNote => 
+          prevSelectedNote !== null && prevSelectedNote > 0
+            ? prevSelectedNote - 1 
+            : prevSelectedNote === null
+              ? notes.length - 1 
+              : null);
+      } else if (event.key === 'ArrowDown') {
+        setSelectedNote(prevSelectedNote => 
+          prevSelectedNote !== null && prevSelectedNote < notes.length - 1 
+            ? prevSelectedNote + 1 
+            : prevSelectedNote === null 
+              ? notes.length - 1 
+              : null
+        );
+        
+              }
+    }, [selectedNote, notes.length]);
+    
     useEffect(() => {
       getNotes().then((notes) => {
         setNotes(notes)
-      })
-
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'ArrowUp') {
-          setSelectedNote(prevSelectedNote => 
-            prevSelectedNote !== null && prevSelectedNote > 0
-              ? prevSelectedNote - 1 
-              : prevSelectedNote === null
-                ? notes.length - 1 
-                : null);
-        } else if (event.key === 'ArrowDown') {
-          setSelectedNote(prevSelectedNote => 
-            prevSelectedNote !== null && prevSelectedNote < notes.length - 1 
-              ? prevSelectedNote + 1 
-              : prevSelectedNote === null 
-                ? notes.length - 1 
-                : null
-          );
-          
-                }
-      };
-      window.addEventListener('keydown', handleKeyDown);
+      });
+    
+      window.addEventListener('keydown', handleArrowAndDeleteKeys);
           return () => {
-        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('keydown', handleArrowAndDeleteKeys);
       };
-    }, [notes.length]);
+    }, [handleArrowAndDeleteKeys]);
 
     const [text, setText] = useState('');
   
@@ -50,7 +62,7 @@ const DesktopApp = () => {
       setText('');
     };
   
-    const handleKeyDown = (event:any)=>{
+    const handleEnterKey = (event:any)=>{
       if (event.key === 'Enter') {
         event.preventDefault();
         handleSubmit(event);
@@ -89,7 +101,7 @@ const DesktopApp = () => {
                 })
             }
             <form onSubmit={handleSubmit} className={styles.form}>
-            <textarea onInput={autoGrow} className={styles.input} value={text} onChange={e => setText(e.target.value)} onKeyDown={handleKeyDown}
+            <textarea onInput={autoGrow} className={styles.input} value={text} onChange={e => setText(e.target.value)} onKeyDown={handleEnterKey}
             />
             </form>
         </div>
